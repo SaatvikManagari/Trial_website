@@ -1,0 +1,47 @@
+:root {
+  --plum: #1d1122; --plum-2: #2a1830; --brass: #c8963e; --marigold: #ffd9a0; --rose: #ff5d8f;
+  --serif: 'Young Serif', Georgia, serif; --sans: 'DM Sans', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; overflow: hidden; background: #120a16; overscroll-behavior: none; }
+body { font-family: var(--sans); color: var(--marigold); -webkit-user-select: none; user-select: none; }
+canvas { display: block; touch-action: none; }
+
+button {
+  font: 500 1rem var(--sans); color: var(--plum); background: var(--marigold);
+  border: 0; border-radius: 999px; padding: 0.85rem 1.8rem; cursor: pointer;
+}
+button:hover { background: #fff1d6; }
+button:focus-visible { outline: 3px solid var(--rose); outline-offset: 3px; }
+
+.screen, .finale {
+  position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; padding: 2rem; text-align: center; background: rgba(18, 10, 22, 0.88);
+}
+.screen { z-index: 20; }
+.screen h1, .finale h2 { font: 400 clamp(2.2rem, 7vw, 4.5rem)/1.05 var(--serif); margin: 0; }
+.screen p, .finale p { max-width: 34ch; margin: 0; line-height: 1.5; opacity: 0.85; }
+.bar { width: min(260px, 70vw); height: 4px; background: rgba(255, 217, 160, 0.2); border-radius: 4px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--marigold); transition: width 0.2s; }
+
+.memory {
+  position: fixed; left: 50%; bottom: max(1.5rem, env(safe-area-inset-bottom)); z-index: 10;
+  width: min(92vw, 640px); transform: translate(-50%, 24px); opacity: 0; pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.memory.is-visible { opacity: 1; transform: translate(-50%, 0); }
+.memory figure {
+  margin: 0; padding: 0.7rem; background: rgba(29, 17, 34, 0.92);
+  border: 1px solid var(--brass); border-radius: 6px; backdrop-filter: blur(6px);
+}
+.memory img { display: block; width: 100%; max-height: 52vh; object-fit: contain; border-radius: 3px; background: #000; }
+.memory figcaption { font: 400 clamp(1.1rem, 3.5vw, 1.5rem)/1.3 var(--serif); padding: 0.8rem 0.4rem 0.3rem; }
+
+.finale { z-index: 30; opacity: 0; pointer-events: none; background: rgba(18, 10, 22, 0.55); transition: opacity 0.8s ease; }
+.finale.is-visible { opacity: 1; pointer-events: auto; }
+.finale h2 { color: var(--rose); text-shadow: 0 0 40px rgba(255, 93, 143, 0.5); }
+
+.look-zone { position: fixed; top: 0; right: 0; width: 60%; height: 100%; z-index: 5; touch-action: none; }
+.joystick { position: fixed; left: max(1.2rem, env(safe-area-inset-left)); bottom: max(1.2rem, env(safe-area-inset-bottom)); width: 150px; height: 150px; z-index: 6; touch-action: none; }
+
+@media (prefers-reduced-motion: reduce) { .memory, .finale { transition: none; } }
